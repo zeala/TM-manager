@@ -19,19 +19,21 @@ export const Form = (props: FormProps) => {
   const inputField: any = useRef(null);
 
   const handlePress = () => {
-    console.log(' ::: handlePress, inputField.current :: ', inputField.current);
     console.log(
       ' ::: handlePress, inputField.lastNativeText :: ',
       inputField.current._lastNativeText,
     );
-    props.handlePress(inputField!.current!._lastNativeText)
-  }
+    props.handlePress(inputField!.current!._lastNativeText);
+    inputField.current.clear();
+
+  };
 
   return (
     <View>
       <View style={styles.form}>
         <TextInput
           ref={inputField}
+          clearButtonMode="always"
           style={styles.textInput}
           onChangeText={text => props.handleChange(text)}
         />
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderWidth: 1,
     height: 40,
-    width: screen.width / 2,
+    width: '40%', // screen.width / 2,
     fontSize: 20,
   },
   listItem: {

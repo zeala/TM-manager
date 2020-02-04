@@ -1,12 +1,13 @@
 import {AnyAction, combineReducers} from 'redux';
+import {AppState} from './store';
 
 export const CREATE_TASK = 'CREATE_TASK';
 
-const user = (state = {}, _action: AnyAction) => {
+const user = (state: AppState = {tasks: []}, _action: AnyAction) => {
   return state;
 };
 
-const tasksReducer = (state = [], action: AnyAction) => {
+const tasks = (state = [], action: AnyAction) => {
   switch (action.type) {
     case CREATE_TASK:
       return [action.payload, ...state];
@@ -15,4 +16,4 @@ const tasksReducer = (state = [], action: AnyAction) => {
   }
 };
 
-export const reducers = combineReducers({tasksReducer, user});
+export const reducers = combineReducers({tasks, user});
