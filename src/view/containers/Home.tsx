@@ -17,7 +17,17 @@ export const HomeComponent = (props: HomeProps) => {
     <LinearGradient colors={['#ccc', '#f3c']} style={{height: '100%'}}>
       <Form handleChange={props.handleChange} handlePress={props.handlePress} />
       <TextOutput tasks={props.tasks} />
-      <Icon name="facebook" size={30} style={{width: 150, height: 50, position: 'absolute', top: '50%', alignSelf: 'center'}} color="blue">
+      <Icon
+        name="facebook"
+        size={30}
+        style={{
+          width: 150,
+          height: 50,
+          position: 'absolute',
+          top: '50%',
+          alignSelf: 'center',
+        }}
+        color="blue">
         <Text style={{fontSize: 12}}>Login with Facebook</Text>
       </Icon>
     </LinearGradient>
