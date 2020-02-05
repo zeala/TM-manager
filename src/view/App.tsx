@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
-import {Form} from '../components/Form';
 import {AppState} from '../redux/store';
-import {TextOutput} from '../components/TextOutput';
-import { CREATE_TASK, RETRIEVE_STORED_TASKS } from '../redux/actions';
+import {createTask, setTasksFromAsyncStore} from '../redux/actions';
+import {HomeComponent} from './containers/Home';
 
 interface AppProps {
   createTask: (task: string) => void;
@@ -19,7 +16,6 @@ const App = (props: AppProps) => {
 
   useEffect(() => {
     async function retrieveAsyncStore() {
-      console.log(' --- retrieving async store');
       const retrievedTasks = (await AsyncStorage.getItem('tasks')) || '{}';
       props.setTasksFromAsyncStore(JSON.parse(retrievedTasks));
     }
@@ -47,12 +43,11 @@ const App = (props: AppProps) => {
     props.createTask(txt);
   };
   return (
-    <>
-      <View>
-        <Form handleChange={handleChange} handlePress={handlePress} />
-        <TextOutput tasks={props.tasks} />
-      </View>
-    </>
+    <HomeComponent
+      handleChange={handleChange}
+      handlePress={handlePress}
+      tasks={props.tasks}
+    />
   );
 };
 
@@ -65,16 +60,10 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createTask: (task: string) => {
-      dispatch({
-        type: CREATE_TASK,
-        payload: task,
-      });
+      dispatch(createTask(task));
     },
     setTasksFromAsyncStore: (tasks: Array<string>) => {
-      dispatch({
-        type: RETRIEVE_STORED_TASKS,
-        payload: tasks,
-      });
+      dispatch(setTasksFromAsyncStore(tasks));
     },
   };
 };

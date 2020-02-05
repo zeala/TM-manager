@@ -1,10 +1,14 @@
 import {AnyAction} from 'redux';
 import {SET_MODAL_VISIBILITY} from '../actions';
 
-export const ui = (state: any, action: AnyAction) => {
+const INITIAL_STATE = {
+  modalVisible: false
+}
+
+export const ui = (state: any = INITIAL_STATE, action: AnyAction) => {
   switch (action.type) {
     case SET_MODAL_VISIBILITY:
-      return {...state, modalVisibility: action.payload};
+      return {...state, modalVisible: action.payload};
     default:
       return state;
   }
