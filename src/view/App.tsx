@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {Form} from '../components/Form';
 import {AppState} from '../redux/store';
 import {TextOutput} from '../components/TextOutput';
-import { CREATE_TASK, RETRIEVE_STORED_TASKS } from '../redux/reducers';
+import { CREATE_TASK, RETRIEVE_STORED_TASKS } from '../redux/actions';
 
 interface AppProps {
   createTask: (task: string) => void;
