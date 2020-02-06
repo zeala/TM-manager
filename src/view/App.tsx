@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import AsyncStorage from '@react-native-community/async-storage';
-import {AppState} from '../redux/store';
-import {createTask, setTasksFromAsyncStore} from '../redux/actions';
-import {HomeComponent} from './containers/Home';
+import AsyncStorage from "@react-native-community/async-storage";
+import {HomeComponent} from "./containers/Home";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {View, Text} from "react-native";
+
+const Tab = createBottomTabNavigator();
 
 interface AppProps {
   createTask: (task: string) => void;
@@ -43,32 +45,22 @@ const App = (props: AppProps) => {
     props.createTask(txt);
   };
   return (
-    <HomeComponent
-      handleChange={handleChange}
-      handlePress={handlePress}
-      tasks={props.tasks}
-    />
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen
+          name="Home"
+          children={() => (
+            <HomeComponent
+              handleChange={handleChange}
+              handlePress={handlePress}
+              tasks={props.tasks}
+            />
+          )}
+        />
+        <Tab.Screen name="Test" component={View} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    tasks: state.tasks,
-  };
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createTask: (task: string) => {
-      dispatch(createTask(task));
-    },
-    setTasksFromAsyncStore: (tasks: Array<string>) => {
-      dispatch(setTasksFromAsyncStore(tasks));
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
+export default App;
